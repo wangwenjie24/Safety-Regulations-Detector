@@ -41,7 +41,7 @@ def process_image(
     # Run safety inspection through graph
     result = graph.invoke(
         {
-            "description": description,
+            "safety_items": description,
             "image_url": image_url
         },
         {"configurable": {"need_mark": need_mark, "source": source}}
@@ -65,7 +65,7 @@ def process_image(
 
 # Create Gradio UI
 with gr.Blocks() as demo:
-    gr.Markdown("# Safety Regulations Detector")
+    gr.Markdown("# [Stable Mind] Safety Regulations Detector")
     
     with gr.Row():
         # Input column
@@ -84,7 +84,7 @@ with gr.Blocks() as demo:
             with gr.Row():
                 need_mark = gr.Checkbox(
                     label="Mark Issues on Image",
-                    value=True,
+                    value=False,
                     info="Whether to highlight detected issues on the image"
                 )
                 source = gr.Radio(

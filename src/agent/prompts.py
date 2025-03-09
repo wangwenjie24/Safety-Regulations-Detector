@@ -1,7 +1,7 @@
 rule_writer_instructions="""You are an intelligent safety assistant that converts describe into safety regulation rules.
 
 # Tasks:
-Generate safety regulation items strictly based on {description}. 
+Generate safety regulation items strictly based on {safety_items}. 
 
 # Guidelines:
 - Identify the safety regulation items.
@@ -49,7 +49,7 @@ Safety Regulations:
 locator_instructions = """You are an intelligent visual analysis assistant.
 
 # Tasks:
-Analyze the description to Identify the location of each single described individual and return their coordinates.
+Analyze the description to identify the location of each described individual and return their coordinates in the image.
 
 <Description>
 {description}
@@ -57,58 +57,22 @@ Analyze the description to Identify the location of each single described indivi
 
 # Guidelines:
 - Analyze the description to determine how many individuals need to be located.
-- Locate each single individual based on the given description.
-- Return the coordinates for all identified individuals.
+- For each individual, provide their bounding box coordinates in [x1, y1, x2, y2] format.
+- x1, y1 represents the top-left corner.
+- x2, y2 represents the bottom-right corner.
+- All coordinates should be positive integers.
+- Coordinates should be within the image dimensions.
 
 # Output format:
-{{'coordinates': [x1, y1, x2, y2]}}
+{{"coordinates": [x1, y1, x2, y2]}}
 
-# Notes
-- Return only the JSON object.
-- No extra text or markdown tags.
+# Example:
+For one person in the top-left of the image:
+{{"coordinates": [100, 50, 200, 300]}}
+
+# Notes:
+- Return ONLY the JSON object, no markdown formatting.
+- Do not include any explanatory text.
+- Do not use ```json or ``` markers.
+- The response must be a valid JSON string.
 """
-
-
-
-# detector_instructions="""You are an intelligent visual analysis assistant specializing in detecting safety violations in images.
-
-# # Tasks:
-# Analyze the image to determine {condition}
-
-# # Guidelines:
-# - Count the total number of individuals.
-# - Identify their locations (foreground, background, left, right).
-# - Provide a conclusion based on the assessment.
-#   - Answer “True” if the violation is present.
-#   - Answer “False” if the violation is absent or unclear.
-# - Provide a clear explanation supporting your conclusion.
-# - If violations are detected, describe each violating individual (clothing, features, position, etc.) for bounding box annotation.
-
-# # Output format:
-# {{"conclusion": "True/False", "explanation": "Detailed explanation.","targets": ["Clear and concise description of the violating individuals"]}}
-
-# # Notes
-# - Do not consider whether it is an office, construction site, or any other environment;
-# - All individuals in the image must be inspected, regardless of the scene or their role.
-# - Return only the JSON object.
-# - No extra text or markdown tags.
-# """
-
-
-# detection_query_writer_instructions="""You are an intelligent safety assistant that converts inspection items into precise queries.
-
-# # Tasks:
-# Generate queries strictly based on {safety_regulations}. 
-
-# # Guidelines:
-# - Identify the specific safety inspection items.
-# - Generate only one question per inspection item.
-# - Use precise, unambiguous language.
-
-# # Output format:
-# {{"queries": [{{"query": "Are there any individuals not wearing safety helmets?"}}]}}
-
-# # Notes
-# - Return only the JSON object.
-# - No extra text or markdown tags.
-# """

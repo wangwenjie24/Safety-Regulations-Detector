@@ -50,16 +50,18 @@ class Coordinates(BaseModel):
     )
 
 class AnalysisState(TypedDict):
-    description: str
+    safety_items: str
     image_url: str
     rules: list[Rule]
-    completed_detections: Annotated[list, operator.add]
-    violation_detections: list[DetctionResult]
+    completed_detection_results: Annotated[list, operator.add]
+    explanation_list: list[str]
+    coordinates_list: list[Coordinates]
+    conclusion: bool    
     marked_image: str
     final_result: str
 
 class AnalysisInputState(TypedDict):
-    description: str
+    safety_items: str
     image_url: str
 
 class AnalysisOutputState(TypedDict):
@@ -73,7 +75,7 @@ class DetectionState(TypedDict):
     targets: list[str]
     target: str
     coordinates: Annotated[list[Coordinates], operator.add]
-    completed_detections: list[DetctionResult]
+    completed_detection_results: list[DetctionResult]
 
 class DetectionOutputState(TypedDict):
-    completed_detections: list[DetctionResult]
+    completed_detection_results: list[DetctionResult]

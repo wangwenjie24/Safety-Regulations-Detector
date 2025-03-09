@@ -11,12 +11,13 @@ from langchain_core.runnables import RunnableConfig
 
 @dataclass(kw_only=True)
 class Configuration:
-    """The configuration for the agent."""
+    """The configuration for the agent.
+    
+    Attributes:
+        need_mark (bool): Whether to mark the detected violations on the image.
+        source (Literal["local", "web"]): The source of the image.
+    """
 
-    # Changeme: Add configurable values here!
-    # these values can be pre-set when you
-    # create assistants (https://langchain-ai.github.io/langgraph/cloud/how-tos/configuration_cloud/)
-    # and when you invoke the graph
     need_mark: bool = False
     source: Literal["local", "web"] = "web"
 
